@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
-const knex = require("knex")
 const cors = require("cors");
+const bancoDeDados = require("./conexao");
 
 const app = express();
 
@@ -11,9 +11,8 @@ app.use(express.json());
 
 app.get("/", async (req, res) => {
     try {
-      const carros = await knex("carros").select();
-      console.log(knex("carros").select().toString());
-      console.log('Resultado da consulta:', carros);
+      const carros = await bancoDeDados.select('*').from('carros');
+
       return res.json(carros);
     } catch (error) {
       console.error('Erro na consulta:', error);
